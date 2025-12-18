@@ -7,21 +7,21 @@ namespace Local_Study_and_Focus_Companion
     public partial class MainWindow : Window
     {
         DispatcherTimer timer = new DispatcherTimer();
-
+        int timeValue = 1; // time in seconds
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent(); // initialize components from xaml
 
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(timeValue); // set timer interval
+            timer.Tick += Timer_Tick; // add tick event
         }
 
         int seconds = 0;
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            seconds++;
-            counter.Content = seconds.ToString();
+            seconds += timeValue; // increment seconds
+            counter.Content = seconds.ToString(); // display seconds
         }
 
 
@@ -35,6 +35,11 @@ namespace Local_Study_and_Focus_Companion
             timer.Stop();
         }
 
-        // leggg til en reset button for timeren 
+        public void ResetTimer(object sender, RoutedEventArgs e)
+        {
+            timer.Stop();
+            seconds = 0;
+            counter.Content = seconds.ToString();
+        }
     }
 }
