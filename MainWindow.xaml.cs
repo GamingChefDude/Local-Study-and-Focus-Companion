@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -8,6 +9,11 @@ namespace Local_Study_and_Focus_Companion
     {
         DispatcherTimer timer = new DispatcherTimer();
         int timeValue = 1; // time in seconds
+
+        int seconds = 0;
+        int minutes = 0;
+        int hours = 0;
+
         public MainWindow()
         {
             InitializeComponent(); // initialize components from xaml
@@ -16,12 +22,24 @@ namespace Local_Study_and_Focus_Companion
             timer.Tick += Timer_Tick; // add tick event
         }
 
-        int seconds = 0;
-
         private void Timer_Tick(object sender, EventArgs e)
         {
+            if (seconds == 60)
+            {
+                seconds = 0;
+                minutes += 1;
+                minCounter.Content = minutes.ToString();
+            }
+
+            if (minutes == 60)
+            {
+                minutes = 0;
+                hours += 1;
+                hourCounter.Content = minutes.ToString();
+            }
+
             seconds += timeValue; // increment seconds
-            counter.Content = seconds.ToString(); // display seconds
+            sekCounter.Content = seconds.ToString(); // display seconds
         }
 
 
@@ -39,7 +57,7 @@ namespace Local_Study_and_Focus_Companion
         {
             timer.Stop();
             seconds = 0;
-            counter.Content = seconds.ToString();
+            sekCounter.Content = seconds.ToString();
         }
     }
 }
