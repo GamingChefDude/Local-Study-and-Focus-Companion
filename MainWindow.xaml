@@ -11,8 +11,18 @@
         Height="720"
         WindowStartupLocation="CenterScreen"
         >
-    <Grid>
+    <Grid Background="#999999">
         <Grid.Resources>
+            
+            <!-- Main Widget style -->
+            <Style x:Key="MainWidget" TargetType="Border">
+                <Setter Property="CornerRadius" Value="25"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="5"/>
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
 
             <!-- Control button style -->
             <Style x:Key="ControlButton" TargetType="Button">
@@ -67,15 +77,12 @@
         
         <!-- Timer Widget -->
         <Border
+            Style="{StaticResource MainWidget}"
             Width="150"
             Height="200"
-            CornerRadius="25"
-            BorderBrush="Black"
-            BorderThickness="5"
-            Background="LightGray"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
             Margin="12,12,0,0">
+
+
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -84,29 +91,24 @@
                 </Grid.RowDefinitions>
                 
                 <!-- Counter Labels -->
-                <Label 
-                    x:Name="sekCounter"
+                <Label x:Name="sekCounter"
                     Style="{StaticResource counter}" 
                     Margin="97,0,0,0"/>
 
-                <Label 
-                    x:Name="minCounter"
+                <Label x:Name="minCounter"
                     Style="{StaticResource counter}" 
                     HorizontalAlignment="Center"/>
 
-                <Label 
-                    x:Name="hourCounter"
+                <Label x:Name="hourCounter"
                     Style="{StaticResource counter}"
                     Margin="4,0,0,0"/>
                 
-                <Label 
-                    x:Name="Space"
+                <Label x:Name="Space"
                     Style="{StaticResource counter}"
                     Content=":"
                     Margin="43,0,0,0"/>
 
-                <Label 
-                     x:Name="Space2"
+                <Label x:Name="Space2"
                      Style="{StaticResource counter}"
                      Content=":"
                      Margin="89,0,0,0"/>
@@ -135,5 +137,14 @@
                 </UniformGrid>
             </Grid>
         </Border>
+        
+        <!-- Notes Widget -->
+        <Border
+            Style="{StaticResource MainWidget}"
+            VerticalAlignment="Stretch"
+            Width="600"
+            Margin="174,12,0,12">
+        </Border>
+
     </Grid>
 </Window>
