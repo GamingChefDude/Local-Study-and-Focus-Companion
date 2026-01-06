@@ -57,8 +57,16 @@ namespace Local_Study_and_Focus_Companion
         public void ResetTimer(object sender, RoutedEventArgs e)
         {
             timer.Stop();
+
+            // reset values
             seconds = 0;
-            sekCounter.Content = seconds.ToString();
+            minutes = 0;
+            hours = 0;
+            
+            // reset labels
+            sekCounter.Content = "00";
+            minCounter.Content = "00";
+            hourCounter.Content = "00"; 
         }
     }
 }
