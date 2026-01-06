@@ -9,6 +9,7 @@ namespace Local_Study_and_Focus_Companion
         DispatcherTimer timer = new DispatcherTimer();
         int timeValue = 1; // time in seconds
 
+        int sekToMinToHour = 60;
         int seconds = 0;
         int minutes = 0;
         int hours = 0;
@@ -23,24 +24,52 @@ namespace Local_Study_and_Focus_Companion
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            if (seconds != sekToMinToHour || minutes != sekToMinToHour)
+            {
+                seconds += timeValue; // increment seconds
+            }
+
             // change seconds into minutes
-            if (seconds == 60)
+            if (seconds == sekToMinToHour)
             {
                 seconds = 0;
                 minutes += 1;
-                minCounter.Content = minutes.ToString();
+
+                if (minutes < 10)
+                {
+                    minCounter.Content = "0" + minutes.ToString();
+                }
+                else
+                {
+                    minCounter.Content = minutes.ToString();
+                }
             }
 
             // change minutes into hours
-            if (minutes == 60)
+            if (minutes == sekToMinToHour)
             {
                 minutes = 0;
                 hours += 1;
-                hourCounter.Content = minutes.ToString();
+                if (hours < 10)
+                {
+                    hourCounter.Content = "0" + hours.ToString();
+                }
+                else
+                {
+                    hourCounter.Content = hours.ToString();
+                }
+
             }
 
-            seconds += timeValue; // increment seconds
-            sekCounter.Content = seconds.ToString(); // display seconds
+            // added leading zero of numbers under 10
+            if (seconds < 10)
+            {
+                sekCounter.Content = "0" + seconds.ToString(); // display seconds
+            }
+            else
+            {
+                sekCounter.Content = seconds.ToString(); // display seconds
+            }
         }
 
 
