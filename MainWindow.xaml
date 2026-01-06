@@ -32,13 +32,16 @@
                             VerticalAlignment="Center"/>
                             </Border>
 
+                            <!-- Mouse trigger -->
                             <ControlTemplate.Triggers>
+                                <!-- Mouse over button -->
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="border"
                                     Property="Opacity"
                                     Value="0.8"/>
                                 </Trigger>
 
+                                <!-- Button pressed -->
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter TargetName="border"
                                     Property="Opacity"
@@ -61,8 +64,9 @@
             </Style>
 
         </Grid.Resources>
-
-        <Border 
+        
+        <!-- Timer Widget -->
+        <Border
             Width="150"
             Height="200"
             CornerRadius="25"
@@ -73,12 +77,13 @@
             VerticalAlignment="Top"
             Margin="12,12,0,0">
 
-            <Grid Margin="1,0,-1,0">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-
+                
+                <!-- Counter Labels -->
                 <Label 
                     x:Name="sekCounter"
                     Style="{StaticResource counter}" 
@@ -106,6 +111,7 @@
                      Content=":"
                      Margin="89,0,0,0"/>
 
+                <!-- Control Buttons -->
                 <UniformGrid 
                     Grid.Row="1"
                     Columns="3"

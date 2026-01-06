@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -24,6 +23,7 @@ namespace Local_Study_and_Focus_Companion
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            // change seconds into minutes
             if (seconds == 60)
             {
                 seconds = 0;
@@ -31,6 +31,7 @@ namespace Local_Study_and_Focus_Companion
                 minCounter.Content = minutes.ToString();
             }
 
+            // change minutes into hours
             if (minutes == 60)
             {
                 minutes = 0;
