@@ -143,7 +143,19 @@
             Style="{StaticResource MainWidget}"
             VerticalAlignment="Stretch"
             Width="600"
-            Margin="174,12,0,12">
+            Margin="174,12,0,12"
+            Padding="7">
+
+            <TextBox x:Name="noteBox"
+                Background="Transparent"
+                BorderThickness="0"
+                AcceptsReturn="True"
+                TextWrapping="Wrap"
+                
+                FontSize="12"
+                FontWeight="Medium"
+                FontStyle="Normal">
+            </TextBox>
         </Border>
 
     </Grid>
