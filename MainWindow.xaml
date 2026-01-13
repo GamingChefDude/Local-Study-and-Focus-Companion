@@ -158,5 +158,37 @@
             </TextBox>
         </Border>
 
+        <!-- Text Changer Widget -->
+        <Border
+            Style="{StaticResource MainWidget}"
+            Width="150"
+            VerticalAlignment="Stretch"
+            Padding="7"
+            Margin="12,224,0,12">
+
+            <ComboBox 
+                x:Name="sizeChanger"
+                
+                IsEditable="True"
+                IsTextSearchEnabled="False"
+                
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                MinWidth="40"
+                
+                SelectedIndex="0"
+                SelectedValuePath="Content"
+                LostFocus="sizeChanger_Changed">
+
+                <ComboBoxItem Content="12"/>
+                <ComboBoxItem Content="14"/>
+                <ComboBoxItem Content="16"/>
+                <ComboBoxItem Content="18"/>
+                <ComboBoxItem Content="20"/>
+                <ComboBoxItem Content="24"/>
+
+            </ComboBox>
+        </Border>
+        
     </Grid>
 </Window>

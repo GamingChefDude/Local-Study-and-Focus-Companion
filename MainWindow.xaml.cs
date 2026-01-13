@@ -97,5 +97,10 @@ namespace Local_Study_and_Focus_Companion
             minCounter.Content = "00";
             hourCounter.Content = "00"; 
         }
+
+        public void sizeChanger_Changed(object sender, RoutedEventArgs e)
+        {
+            noteBox.FontSize = Convert.ToDouble(sizeChanger.Text);
+        }
     }
 }
