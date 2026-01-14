@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -6,10 +8,10 @@ namespace Local_Study_and_Focus_Companion
 {
     public partial class MainWindow : Window
     {
-        DispatcherTimer timer = new DispatcherTimer();
-        int timeValue = 1; // time in seconds
+        readonly DispatcherTimer timer = new DispatcherTimer();
+        const int timeValue = 1; // time in seconds
 
-        int sekToMinToHour = 60;
+        const int sekToMinToHour = 60;
         int seconds = 0;
         int minutes = 0;
         int hours = 0;
@@ -98,9 +100,35 @@ namespace Local_Study_and_Focus_Companion
             hourCounter.Content = "00"; 
         }
 
-        public void sizeChanger_Changed(object sender, RoutedEventArgs e)
+        public void SizeChanger_Changed(object sender, RoutedEventArgs e)
         {
             noteBox.FontSize = Convert.ToDouble(sizeChanger.Text);
+        }
+
+        public void SaveFile(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = fileName.Text;
+            saveFileDialog.DefaultExt = ".txt";
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, noteBox.Text);
+            }
+        }
+
+        private void LoadFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.DefaultExt = ".txt";
+            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.Title = "Select a text file";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                noteBox.Text = File.ReadAllText(openFileDialog.FileName);
+            }
         }
     }
 }

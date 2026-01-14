@@ -24,45 +24,6 @@
                 <Setter Property="VerticalAlignment" Value="Top"/>
             </Style>
 
-            <!-- Control button style -->
-            <Style x:Key="ControlButton" TargetType="Button">
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="Opacity" Value="1"/>
-
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="5">
-                                <ContentPresenter
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                            </Border>
-
-                            <!-- Mouse trigger -->
-                            <ControlTemplate.Triggers>
-                                <!-- Mouse over button -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                    Property="Opacity"
-                                    Value="0.8"/>
-                                </Trigger>
-
-                                <!-- Button pressed -->
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border"
-                                    Property="Opacity"
-                                    Value="0.7"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
             <!-- Counter style -->
             <Style x:Key="counter" TargetType="Label">
                 <Setter Property="Foreground" Value="Black"/>
@@ -72,7 +33,46 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="Padding" Value="0,0,0,0"/>
             </Style>
+            
+            <!-- Button style -->
+            <Style x:Key="MainButton" TargetType="Button">
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="BorderBrush" Value="Black"/>
 
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="5">
+                                <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border"
+                                            Property="Opacity"
+                                            Value="0.8"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border"
+                                            Property="Opacity"
+                                            Value="0.6"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
         </Grid.Resources>
         
         <!-- Timer Widget -->
@@ -121,17 +121,17 @@
 
                     <Button Content="Start"
                             Background="Green"
-                            Style="{StaticResource ControlButton}"
+                            Style="{StaticResource MainButton}"
                             Click="StartTimer"/>
 
                     <Button Content="Stop"
                             Background="Red"
-                            Style="{StaticResource ControlButton}"
+                            Style="{StaticResource MainButton}"
                             Click="StopTimer"/>
 
                     <Button Content="Reset"
                             Background="#6B7280"
-                            Style="{StaticResource ControlButton}"
+                            Style="{StaticResource MainButton}"
                             Click="ResetTimer"/>
 
                 </UniformGrid>
@@ -166,29 +166,88 @@
             Padding="7"
             Margin="12,224,0,12">
 
-            <ComboBox 
-                x:Name="sizeChanger"
+            <StackPanel>
+                <!-- Size Changer -->
+                <ComboBox 
+                    x:Name="sizeChanger"
                 
-                IsEditable="True"
-                IsTextSearchEnabled="False"
+                    IsEditable="True"
+                    IsTextSearchEnabled="False"
                 
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                MinWidth="40"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
                 
-                SelectedIndex="0"
-                SelectedValuePath="Content"
-                LostFocus="sizeChanger_Changed">
+                    SelectedIndex="0"
+                    SelectedValuePath="Content"
+                    LostFocus="SizeChanger_Changed"
+                
+                    Width="60"
+                    >
 
-                <ComboBoxItem Content="12"/>
-                <ComboBoxItem Content="14"/>
-                <ComboBoxItem Content="16"/>
-                <ComboBoxItem Content="18"/>
-                <ComboBoxItem Content="20"/>
-                <ComboBoxItem Content="24"/>
+                    <ComboBoxItem Content="12"/>
+                    <ComboBoxItem Content="14"/>
+                    <ComboBoxItem Content="16"/>
+                    <ComboBoxItem Content="18"/>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="24"/>
 
-            </ComboBox>
+                </ComboBox>
+
+                <!-- File Name Lable -->
+                <Label
+                    Padding="0,0,0,0"
+                    Margin="0,12,0,0">
+                    File Name:
+                </Label>
+
+                <!-- File Name Changer -->
+                <TextBox 
+                    x:Name="fileName"
+                    
+                    Style="{StaticResource FileNameChanger}"
+                    Width="auto"
+                    Height="25"
+                    
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    
+                    VerticalContentAlignment="Center">
+                </TextBox>
+
+                <!-- Save/Load Buttons -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Save Button-->
+                    <Button 
+                        x:Name="saveButton"
+                        Content="Save"
+
+                        Style="{StaticResource MainButton}"
+
+                        Grid.Column="0"
+                        Margin="0,12,6,0"
+                        
+                        Click="SaveFile">
+                    </Button>
+
+                    <!-- Load Button-->
+                    <Button 
+                        x:Name="loadButton"
+                        Content="Load"
+                        
+                        Style="{StaticResource MainButton}"
+                        
+                        Grid.Column="1"
+                        Margin="6,12,0,0"
+
+                        Click="LoadFile"
+                    ></Button>
+                </Grid>
+            </StackPanel>
         </Border>
-        
     </Grid>
 </Window>
