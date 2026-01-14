@@ -196,36 +196,9 @@
             Margin="12,224,0,12">
 
             <StackPanel>
-                <!-- Size Changer -->
-                <ComboBox 
-                    x:Name="sizeChanger"
-                
-                    IsEditable="True"
-                    IsTextSearchEnabled="False"
-                
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                
-                    SelectedIndex="0"
-                    SelectedValuePath="Content"
-                    LostFocus="SizeChanger_Changed"
-                
-                    Width="60"
-                    >
-
-                    <ComboBoxItem Content="12"/>
-                    <ComboBoxItem Content="14"/>
-                    <ComboBoxItem Content="16"/>
-                    <ComboBoxItem Content="18"/>
-                    <ComboBoxItem Content="20"/>
-                    <ComboBoxItem Content="24"/>
-
-                </ComboBox>
-
                 <!-- File Name Lable -->
                 <Label
-                    Padding="0,0,0,0"
-                    Margin="0,12,0,0">
+                    Padding="0,0,0,0">          
                     File Name:
                 </Label>
 
@@ -235,11 +208,11 @@
                     Style="{StaticResource FileNameChanger}"
                     Width="auto"
                     Height="25"
-                    
+    
                     VerticalAlignment="Top"
                     HorizontalAlignment="Stretch"
-                    
-                    VerticalContentAlignment="Center">
+    
+                    VerticalContentAlignment="Center">      
                 </TextBox>
 
                 <!-- Save/Load Buttons -->
@@ -258,23 +231,48 @@
 
                         Grid.Column="0"
                         Margin="0,12,6,0"
-                        
-                        Click="SaveFile">
+        
+                        Click="SaveFile">       
                     </Button>
 
                     <!-- Load Button-->
                     <Button 
                         x:Name="loadButton"
                         Content="Load"
-                        
+        
                         Style="{StaticResource MainButton}"
-                        
+        
                         Grid.Column="1"
                         Margin="6,12,0,0"
 
-                        Click="LoadFile"
-                    ></Button>
+                        Click="LoadFile"></Button>
                 </Grid>
+
+                <!-- Size Changer -->
+                <ComboBox 
+                    x:Name="sizeChanger"
+                
+                    IsEditable="True"
+                    IsTextSearchEnabled="False"
+                
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                
+                    SelectedIndex="0"
+                    SelectedValuePath="Content"
+                    LostFocus="SizeChanger_Changed"
+                
+                    Width="60"
+                    Margin="0,12,0,0">
+
+                    <ComboBoxItem Content="12"/>
+                    <ComboBoxItem Content="14"/>
+                    <ComboBoxItem Content="16"/>
+                    <ComboBoxItem Content="18"/>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="24"/>
+
+                </ComboBox>
             </StackPanel>
         </Border>
     </Grid>
