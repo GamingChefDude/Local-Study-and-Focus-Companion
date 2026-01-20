@@ -95,7 +95,8 @@
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
-                <Setter Property="MinWidth" Value="50"/>
+                <Setter Property="MaxWidth" Value="42"/>
+                <Setter Property="MinWidth" Value="42"/>
 
                 <Setter Property="Template">
                     <Setter.Value>
@@ -105,19 +106,20 @@
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="6">
+                                    CornerRadius="6" >
 
                                     <DockPanel>
                                         <TextBlock
                                             Text="{TemplateBinding Text}"
                                             VerticalAlignment="Center"
+                                            Padding="6,0,0,0"
                                             Foreground="Black"
                                             IsHitTestVisible="False"/>
 
                                         <!-- Arrow button -->
                                         <ToggleButton
                                             DockPanel.Dock="Right"
-                                            Width="24"
+                                            Width="18"
                                             IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                             Focusable="False"
                                             Background="Transparent"
@@ -166,21 +168,6 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
-
-            <Style TargetType="ComboBoxItem">
-                <Setter Property="Background" Value="Beige"/>
-                <Setter Property="Padding" Value="6,2"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#E6E2C5"/>
-                    </Trigger>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="#D8D4B0"/>
-                    </Trigger>
-                </Style.Triggers>
             </Style>
 
         </Grid.Resources>
@@ -335,6 +322,7 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     
+                    SelectedIndex="0"
                     LostFocus="SizeChanger_Changed"
                     
                     Margin="0,12,0,0">
