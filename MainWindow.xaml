@@ -157,7 +157,8 @@
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"
                                         CornerRadius="6"
-                                        Margin="0,2,0,0">
+                                        Margin="0,2,0,0"
+                                        Padding="2,2,2,2">
 
                                         <ScrollViewer>
                                             <ItemsPresenter/>
@@ -168,6 +169,17 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+
+            <Style TargetType="ComboBoxItem">
+                <Setter Property="Background" Value="Beige"/>
+                <Setter Property="Padding" Value="6,2"/>
+
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#D8D4B0"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
         </Grid.Resources>
