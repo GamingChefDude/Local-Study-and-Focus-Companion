@@ -74,7 +74,6 @@ namespace Local_Study_and_Focus_Companion
             }
         }
 
-
         public void StartTimer(object sender, RoutedEventArgs e)
         {
             timer.Start();

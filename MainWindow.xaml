@@ -267,6 +267,17 @@
                 FontStyle="Normal">
             </TextBox>
         </Border>
+        
+        <!-- Subject Widget -->
+        <Border
+            Style="{StaticResource MainWidget}"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150"
+            Height="100"
+            Margin="12,224,0,12">
+
+        </Border>
 
         <!-- Text Changer Widget -->
         <Border
@@ -274,7 +285,7 @@
             Width="150"
             VerticalAlignment="Stretch"
             Padding="7"
-            Margin="12,224,0,12">
+            Margin="12,336,0,12">
 
             <StackPanel>
                 <!-- File Name Lable -->
