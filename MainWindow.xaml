@@ -268,7 +268,7 @@
             </TextBox>
         </Border>
         
-        <!-- Subject Widget -->
+        <!-- Subject picker Widget -->
         <Border
             Style="{StaticResource MainWidget}"
             VerticalAlignment="Top"
