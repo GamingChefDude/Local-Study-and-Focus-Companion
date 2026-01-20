@@ -13,15 +13,15 @@
         >
     <Grid Background="#999999">
         <Grid.Resources>
+            <!-- Base style -->
             <Style x:Key="SoftControlBase" TargetType="Control">
-                <Setter Property="Background" Value="#FFFDE6"/>
+                <Setter Property="Background" Value="Beige"/>
                 <Setter Property="BorderBrush" Value="Black"/>
                 <Setter Property="BorderThickness" Value="1.5"/>
-                <Setter Property="Height" Value="25"/>
+                <Setter Property="MinHeight" Value="25"/>
                 <Setter Property="FontSize" Value="12"/>
                 <Setter Property="Padding" Value="6,2"/>
             </Style>
-
 
             <!-- Main Widget style -->
             <Style x:Key="MainWidget" TargetType="Border">
@@ -68,7 +68,7 @@
                 </Setter>
             </Style>
 
-            <!-- File Name Changer style -->
+            <!-- TextBox style -->
             <Style TargetType="TextBox" BasedOn="{StaticResource SoftControlBase}">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -90,21 +90,97 @@
 
             <!-- FontSize Changer style -->
             <Style TargetType="ComboBox" BasedOn="{StaticResource SoftControlBase}">
-                <Style.Resources>
-                    <Style TargetType="TextBox">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-                </Style.Resources>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+                <Setter Property="MinWidth" Value="50"/>
 
-                <Setter Property="Width" Value="50"/>
-                <Setter Property="Height" Value="25"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Grid>
+                                <Border
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="6">
+
+                                    <DockPanel>
+                                        <TextBlock
+                                            Text="{TemplateBinding Text}"
+                                            VerticalAlignment="Center"
+                                            Foreground="Black"
+                                            IsHitTestVisible="False"/>
+
+                                        <!-- Arrow button -->
+                                        <ToggleButton
+                                            DockPanel.Dock="Right"
+                                            Width="24"
+                                            IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Focusable="False"
+                                            Background="Transparent"
+                                            BorderThickness="0">
+
+                                            <Path
+                                                Data="M 0 0 L 4 4 L 8 0 Z"
+                                                Fill="Black"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"/>
+                                        </ToggleButton>
+
+                                        <!-- Selected content -->
+                                        <ContentPresenter
+                                            Margin="{TemplateBinding Padding}"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            Content="{TemplateBinding SelectionBoxItem}"
+                                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                                    </DockPanel>
+                                </Border>
+
+                                <!-- Popup -->
+                                <Popup
+                                    Name="Popup"
+                                    Placement="Bottom"
+                                    IsOpen="{TemplateBinding IsDropDownOpen}"
+                                    AllowsTransparency="True"
+                                    Focusable="False"
+                                    PopupAnimation="Slide">
+
+                                    <Border
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="6"
+                                        Margin="0,2,0,0">
+
+                                        <ScrollViewer>
+                                            <ItemsPresenter/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="ComboBoxItem">
                 <Setter Property="Background" Value="Beige"/>
-                <Setter Property="BorderBrush" Value="Black"/>
-                <Setter Property="BorderThickness" Value="1.5"/>
-                <Setter Property="SelectedIndex" Value="0"/>
-                <Setter Property="SelectedValuePath" Value="Content"/>
+                <Setter Property="Padding" Value="6,2"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#E6E2C5"/>
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#D8D4B0"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
         </Grid.Resources>
@@ -185,6 +261,8 @@
                 AcceptsReturn="True"
                 TextWrapping="Wrap"
                 
+                
+                                
                 FontSize="12"
                 FontWeight="Medium"
                 FontStyle="Normal">
