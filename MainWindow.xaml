@@ -265,7 +265,7 @@
                 FontSize="12"
                 FontWeight="Medium"
                 FontStyle="Normal">
-                Write here: 
+                Write here:
             </TextBox>
         </Border>
         

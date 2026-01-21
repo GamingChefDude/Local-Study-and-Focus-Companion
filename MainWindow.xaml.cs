@@ -16,6 +16,8 @@ namespace Local_Study_and_Focus_Companion
         int minutes = 0;
         int hours = 0;
 
+        string FullPath;
+
         public MainWindow()
         {
             InitializeComponent(); // initialize components from xaml
@@ -26,6 +28,8 @@ namespace Local_Study_and_Focus_Companion
             string folderName = "Local Study"; // set folder name
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); // get desktop folder path
             string fullPath = Path.Combine(path, folderName); // combine folder name and path
+            FullPath = fullPath;
+
             try
             {
                 if (!Directory.Exists(fullPath)) // check if folder exists
@@ -52,7 +56,7 @@ namespace Local_Study_and_Focus_Companion
 
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        public void Timer_Tick(object sender, EventArgs e)
         {
             if (seconds != sekToMinToHour || minutes != sekToMinToHour)
             {
@@ -159,9 +163,41 @@ namespace Local_Study_and_Focus_Companion
         }
 
         public void SaveSession(object sender, RoutedEventArgs e)
-        {
+        {   
+            // get the current time
+            string timerValueSek = sekCounter.Content.ToString();
+            string timerValueMin = minCounter.Content.ToString();
+            string timerValueHour = hourCounter.Content.ToString();
+            string timerValue = timerValueHour + ":" + timerValueMin + ":" + timerValueSek;
+
+            // get the current date
+            string date = DateTime.Now.ToString("dd-MM-yyyy");
+
+            // get subject
+            string subject;
+            if (subjectName.Text != "")
+            {
+                subject = subjectName.Text;
+                
+                noteBox.Text += "\r\n" + date + " " + timerValue + " " + subject;
             
-            
+                // add data to file
+                try
+                {
+                    using (StreamWriter fileWriter = File.AppendText(FullPath + "\\" + "session.csv"))
+                    {
+                        fileWriter.WriteLine(date + "," + timerValue + "," + subject);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Plase enter a subject");
+            }
         }
     }
 }
