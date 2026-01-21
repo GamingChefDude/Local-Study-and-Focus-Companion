@@ -275,9 +275,36 @@
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Width="150"
-            Height="100"
-            Margin="12,224,0,12">
+            Height="112"
+            Margin="12,224,0,12"
+            Padding="7">
+            <StackPanel>
+                <Label
+                    Padding="0,0,0,0">
+                    Subject Name:
+                </Label>
 
+                <TextBox 
+                    x:Name="subjectName"
+                    Width="auto"
+                    Height="25"
+    
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+    
+                    VerticalContentAlignment="Center">
+                </TextBox>
+
+                <Button 
+                    x:Name="saveSubject"
+                    Content="Save Session"
+
+                    Grid.Column="0"
+                    Margin="0,12,0,0"
+        
+                    Click="SaveFile">
+                </Button>
+            </StackPanel>
         </Border>
 
         <!-- Text Changer Widget -->
@@ -286,7 +313,7 @@
             Width="150"
             VerticalAlignment="Stretch"
             Padding="7"
-            Margin="12,336,0,12">
+            Margin="12,348,0,12">
 
             <StackPanel>
                 <!-- File Name Lable -->
