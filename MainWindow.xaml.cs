@@ -22,6 +22,34 @@ namespace Local_Study_and_Focus_Companion
 
             timer.Interval = TimeSpan.FromSeconds(timeValue); // set timer interval
             timer.Tick += Timer_Tick; // add tick event
+
+            string folderName = "Local Study"; // set folder name
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); // get desktop folder path
+            string fullPath = Path.Combine(path, folderName); // combine folder name and path
+            try
+            {
+                if (!Directory.Exists(fullPath)) // check if folder exists
+                {
+                    Directory.CreateDirectory(fullPath); // create folder
+                }
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); // show error message
+            }
+            
+            string sessionFileName = "session.csv"; // set session file name
+            try
+            {
+                if (!File.Exists(fullPath + "\\" + sessionFileName)) // check if file exists
+                {
+                    File.Create(fullPath + "\\" + sessionFileName); // create file
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); // show error message
+            }
+
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -117,7 +145,7 @@ namespace Local_Study_and_Focus_Companion
             }
         }
 
-        private void LoadFile(object sender, RoutedEventArgs e)
+        public void LoadFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.DefaultExt = ".txt";
@@ -128,6 +156,12 @@ namespace Local_Study_and_Focus_Companion
             {
                 noteBox.Text = File.ReadAllText(openFileDialog.FileName);
             }
+        }
+
+        public void SaveSession(object sender, RoutedEventArgs e)
+        {
+            
+            
         }
     }
 }
