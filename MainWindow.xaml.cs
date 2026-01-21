@@ -178,8 +178,6 @@ namespace Local_Study_and_Focus_Companion
             if (subjectName.Text != "")
             {
                 subject = subjectName.Text;
-                
-                noteBox.Text += "\r\n" + date + " " + timerValue + " " + subject;
             
                 // add data to file
                 try
