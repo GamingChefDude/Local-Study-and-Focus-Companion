@@ -95,8 +95,6 @@
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
-                <Setter Property="MaxWidth" Value="42"/>
-                <Setter Property="MinWidth" Value="42"/>
 
                 <Setter Property="Template">
                     <Setter.Value>
@@ -283,18 +281,22 @@
                     Padding="0,0,0,0">
                     Subject Name:
                 </Label>
-
-                <TextBox 
+                <ComboBox
                     x:Name="subjectName"
-                    Width="auto"
-                    Height="25"
-    
-                    VerticalAlignment="Top"
                     HorizontalAlignment="Stretch"
-    
-                    VerticalContentAlignment="Center">
-                </TextBox>
+                    IsEditable="True"
+                    IsTextSearchEnabled="False">
 
+                    <ComboBoxItem Content="Math"/>
+                    <ComboBoxItem Content="English"/>
+                    <ComboBoxItem Content="Physics"/>
+                    <ComboBoxItem Content="Chemistry"/>
+                    <ComboBoxItem Content="Biology"/>
+                    <ComboBoxItem Content="History"/>
+                    <ComboBoxItem Content="Geography"/>
+                    <ComboBoxItem Content="PE"/>
+                </ComboBox>
+               
                 <Button 
                     x:Name="saveSubject"
                     Content="Save Session"
@@ -372,6 +374,7 @@
                 
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
+                    Width="42"
                     
                     SelectedIndex="0"
                     LostFocus="SizeChanger_Changed"
