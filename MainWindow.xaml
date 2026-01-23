@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Local_Study_and_Focus_Companion"
         mc:Ignorable="d"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+
 
         Title="Focus Companion"
         Width="1280"
@@ -390,6 +392,14 @@
 
                 </ComboBox>
             </StackPanel>
+        </Border>
+        
+        <!-- Stats Widget -->
+        <Border
+            Style="{StaticResource MainWidget}"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            Margin="786,12,12,12">
         </Border>
     </Grid>
 </Window>
