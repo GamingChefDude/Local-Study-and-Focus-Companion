@@ -1,5 +1,4 @@
-﻿using Local_Study_and_Focus_Companion.Models;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -115,6 +114,7 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             {
                 using (StreamWriter fileWriter = File.AppendText(_sessionFile))
                     fileWriter.WriteLine($"{date},{duration},{Subject}");
+                System.Windows.MessageBox.Show($"Session saved to {_sessionFile}");
             }
             catch (Exception ex)
             {
@@ -132,6 +132,8 @@ namespace Local_Study_and_Focus_Companion.ViewModels
 
             string path = Path.Combine(_folderPath, FileName + ".txt");
             File.WriteAllText(path, NoteText);
+
+            System.Windows.MessageBox.Show($"File saved to {path}");
         }
 
         private void LoadFile()
@@ -162,7 +164,6 @@ namespace Local_Study_and_Focus_Companion.ViewModels
                 UpdateFontSize();   // call automatically
             }
         }
-
 
         public ICommand StartCommand { get; }
         public ICommand StopCommand { get; }
