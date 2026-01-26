@@ -4,17 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Local_Study_and_Focus_Companion"
-        mc:Ignorable="d"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
-
-
+        mc:Ignorable="d"
         Title="Focus Companion"
         Width="1280"
         Height="720"
-        WindowStartupLocation="CenterScreen"
-        >
+        WindowStartupLocation="CenterScreen">
+
     <Grid Background="#999999">
         <Grid.Resources>
+
             <!-- Base style -->
             <Style x:Key="SoftControlBase" TargetType="Control">
                 <Setter Property="Background" Value="Beige"/>
@@ -25,7 +24,7 @@
                 <Setter Property="Padding" Value="6,2"/>
             </Style>
 
-            <!-- Main Widget style -->
+            <!-- Main Widget -->
             <Style x:Key="MainWidget" TargetType="Border">
                 <Setter Property="CornerRadius" Value="25"/>
                 <Setter Property="BorderBrush" Value="Black"/>
@@ -35,29 +34,29 @@
                 <Setter Property="VerticalAlignment" Value="Top"/>
             </Style>
 
-            <!-- Counter style -->
+            <!-- Counter style — cleaned for MVVM -->
             <Style x:Key="counter" TargetType="Label">
                 <Setter Property="Foreground" Value="Black"/>
                 <Setter Property="FontSize" Value="36"/>
-                <Setter Property="Content" Value="00"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="Padding" Value="0,0,0,0"/>
+                <!-- REMOVE default Content="00" so MVVM works -->
+                <Setter Property="Content" Value="{x:Null}"/>
             </Style>
-            
-            <!-- Button style -->
+
+            <!-- Buttons -->
             <Style TargetType="Button" BasedOn="{StaticResource SoftControlBase}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            CornerRadius="5">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="5">
                                 <ContentPresenter
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
                             </Border>
 
                             <ControlTemplate.Triggers>
@@ -70,27 +69,24 @@
                 </Setter>
             </Style>
 
-            <!-- TextBox style -->
+            <!-- TextBox -->
             <Style TargetType="TextBox" BasedOn="{StaticResource SoftControlBase}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">
-                            <Border
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="8">
-
-                                <ScrollViewer
-                                    x:Name="PART_ContentHost"
-                                    Padding="{TemplateBinding Padding}"/>
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Padding="{TemplateBinding Padding}"/>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
 
-            <!-- ComboBox style -->
+            <!-- ComboBox -->
             <Style TargetType="ComboBox" BasedOn="{StaticResource SoftControlBase}">
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -102,64 +98,49 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="ComboBox">
                             <Grid>
-                                <Border
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="6" >
-
+                                <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="6">
                                     <DockPanel>
-                                        <TextBlock
-                                            Text="{TemplateBinding Text}"
-                                            VerticalAlignment="Center"
-                                            Padding="6,0,0,0"
-                                            Foreground="Black"
-                                            IsHitTestVisible="False"/>
+                                        <TextBlock Text="{TemplateBinding Text}"
+                                                   VerticalAlignment="Center"
+                                                   Padding="6,0,0,0"
+                                                   Foreground="Black"
+                                                   IsHitTestVisible="False"/>
 
-                                        <!-- Arrow button -->
-                                        <ToggleButton
-                                            DockPanel.Dock="Right"
-                                            Width="18"
-                                            IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                                            Focusable="False"
-                                            Background="Transparent"
-                                            BorderThickness="0">
+                                        <ToggleButton DockPanel.Dock="Right"
+                                                      Width="18"
+                                                      IsChecked="{Binding IsDropDownOpen, 
+                                                          RelativeSource={RelativeSource TemplatedParent}}"
+                                                      Background="Transparent"
+                                                      BorderThickness="0"
+                                                      Focusable="False">
 
-                                            <Path
-                                                Data="M 0 0 L 4 4 L 8 0 Z"
-                                                Fill="Black"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"/>
+                                            <Path Data="M 0 0 L 4 4 L 8 0 Z"
+                                                  Fill="Black"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
                                         </ToggleButton>
 
-                                        <!-- Selected content -->
-                                        <ContentPresenter
-                                            Margin="{TemplateBinding Padding}"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Left"
-                                            Content="{TemplateBinding SelectionBoxItem}"
-                                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Left"
+                                                          Content="{TemplateBinding SelectionBoxItem}"/>
                                     </DockPanel>
                                 </Border>
 
-                                <!-- Popup -->
-                                <Popup
-                                    Name="Popup"
-                                    Placement="Bottom"
-                                    IsOpen="{TemplateBinding IsDropDownOpen}"
-                                    AllowsTransparency="True"
-                                    Focusable="False"
-                                    PopupAnimation="Slide">
-
-                                    <Border
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="6"
-                                        Margin="0,2,0,0"
-                                        Padding="2,2,2,2">
-
+                                <Popup Name="Popup"
+                                       Placement="Bottom"
+                                       IsOpen="{TemplateBinding IsDropDownOpen}"
+                                       AllowsTransparency="True"
+                                       PopupAnimation="Slide">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="6"
+                                            Margin="0,2,0,0"
+                                            Padding="2">
                                         <ScrollViewer>
                                             <ItemsPresenter/>
                                         </ScrollViewer>
@@ -174,7 +155,6 @@
             <Style TargetType="ComboBoxItem">
                 <Setter Property="Background" Value="Beige"/>
                 <Setter Property="Padding" Value="6,2"/>
-
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="Background" Value="#D8D4B0"/>
@@ -183,111 +163,94 @@
             </Style>
 
         </Grid.Resources>
-        
-        <!-- Timer Widget -->
-        <Border
-            Style="{StaticResource MainWidget}"
-            Width="150"
-            Height="200"
-            Margin="12,12,0,0">
 
-
+        <!-- TIMER WIDGET -->
+        <Border Style="{StaticResource MainWidget}"
+                Width="150"
+                Height="200"
+                Margin="12,12,0,0">
 
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                
+
                 <!-- Counter Labels -->
-                <Label x:Name="sekCounter"
-                    Style="{StaticResource counter}" 
-                    Margin="97,0,0,0"/>
+                <Label Style="{StaticResource counter}"
+                       Content="{Binding Hours}"
+                       Margin="4,0,0,0"/>
 
-                <Label x:Name="minCounter"
-                    Style="{StaticResource counter}" 
-                    HorizontalAlignment="Center"/>
+                <Label Style="{StaticResource counter}"
+                       Content="{Binding Minutes}"
+                       HorizontalAlignment="Center"/>
 
-                <Label x:Name="hourCounter"
-                    Style="{StaticResource counter}"
-                    Margin="4,0,0,0"/>
-                
-                <Label x:Name="Space"
-                    Style="{StaticResource counter}"
-                    Content=":"
-                    Margin="43,0,0,0"/>
+                <Label Style="{StaticResource counter}"
+                       Content="{Binding Seconds}"
+                       Margin="97,0,0,0"/>
 
-                <Label x:Name="Space2"
-                     Style="{StaticResource counter}"
-                     Content=":"
-                     Margin="89,0,0,0"/>
+                <!-- Colon separators -->
+                <Label Style="{StaticResource counter}"
+                       Content=":"
+                       Margin="43,0,0,0"/>
 
-                <!-- Control Buttons -->
-                <UniformGrid 
-                    Grid.Row="1"
-                    Columns="3"
-                    Margin="12,0,12,12">
+                <Label Style="{StaticResource counter}"
+                       Content=":"
+                       Margin="89,0,0,0"/>
+
+                <!-- Timer Buttons -->
+                <UniformGrid Grid.Row="1"
+                             Columns="3"
+                             Margin="12,0,12,12">
 
                     <Button Content="Start"
                             Background="Green"
-                            Click="StartTimer"
+                            Command="{Binding StartCommand}"
                             Margin="0,0,6,0"/>
 
                     <Button Content="Stop"
                             Background="Red"
-                            Click="StopTimer"/>
+                            Command="{Binding StopCommand}"/>
 
                     <Button Content="Reset"
                             Background="#6B7280"
-                            Click="ResetTimer"
+                            Command="{Binding ResetCommand}"
                             Margin="6,0,0,0"/>
 
                 </UniformGrid>
             </Grid>
         </Border>
-        
-        <!-- Notes Widget -->
-        <Border
-            Style="{StaticResource MainWidget}"
-            VerticalAlignment="Stretch"
-            Width="600"
-            Margin="174,12,0,12"
-            Padding="7">
 
-            <TextBox x:Name="noteBox"
-                Background="Transparent"
-                BorderThickness="0"
-                AcceptsReturn="True"
-                TextWrapping="Wrap"
-                
-                
-                                
-                FontSize="12"
-                FontWeight="Medium"
-                FontStyle="Normal">
-                Write here:
-            </TextBox>
+        <!-- NOTES WIDGET -->
+        <Border Style="{StaticResource MainWidget}"
+                VerticalAlignment="Stretch"
+                Width="600"
+                Margin="174,12,0,12"
+                Padding="7">
+
+            <TextBox Background="Transparent"
+                     BorderThickness="0"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Text="{Binding NoteText}"
+                     FontSize="{Binding NoteFontSize}"/>
         </Border>
-        
-        <!-- Subject picker Widget -->
-        <Border
-            Style="{StaticResource MainWidget}"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Left"
-            Width="150"
-            Height="112"
-            Margin="12,224,0,12"
-            Padding="7">
+
+        <!-- SUBJECT PICKER -->
+        <Border Style="{StaticResource MainWidget}"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Width="150"
+                Height="112"
+                Margin="12,224,0,12"
+                Padding="7">
+
             <StackPanel>
-                <Label
-                    Padding="0,0,0,0">
-                    Subject Name:
-                </Label>
-                <ComboBox
-                    x:Name="subjectName"
-                    HorizontalAlignment="Stretch"
-                    IsEditable="True"
-                    IsTextSearchEnabled="False">
+                <Label Padding="0">Subject Name:</Label>
+
+                <ComboBox Text="{Binding Subject}"
+                          IsEditable="True"
+                          IsTextSearchEnabled="False">
 
                     <ComboBoxItem Content="Math"/>
                     <ComboBoxItem Content="English"/>
@@ -298,89 +261,49 @@
                     <ComboBoxItem Content="Geography"/>
                     <ComboBoxItem Content="PE"/>
                 </ComboBox>
-               
-                <Button 
-                    x:Name="saveSubject"
-                    Content="Save Session"
 
-                    Grid.Column="0"
-                    Margin="0,12,0,0"
-        
-                    Click="SaveSession">
-                </Button>
+                <Button Content="Save Session"
+                        Margin="0,12,0,0"
+                        Command="{Binding SaveSessionCommand}"/>
             </StackPanel>
         </Border>
 
-        <!-- Text Changer Widget -->
-        <Border
-            Style="{StaticResource MainWidget}"
-            Width="150"
-            VerticalAlignment="Stretch"
-            Padding="7"
-            Margin="12,348,0,12">
+        <!-- FILE & FONT SETTINGS WIDGET -->
+        <Border Style="{StaticResource MainWidget}"
+                Width="150"
+                VerticalAlignment="Stretch"
+                Padding="7"
+                Margin="12,348,0,12">
 
             <StackPanel>
-                <!-- File Name Lable -->
-                <Label
-                    Padding="0,0,0,0">          
-                    File Name:
-                </Label>
 
-                <!-- File Name Changer -->
-                <TextBox 
-                    x:Name="fileName"
-                    Width="auto"
-                    Height="25"
-    
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch"
-    
-                    VerticalContentAlignment="Center">      
-                </TextBox>
+                <Label Padding="0">File Name:</Label>
 
-                <!-- Save/Load Buttons -->
-                <Grid>
+                <TextBox Text="{Binding FileName}"
+                         Height="25"
+                         VerticalContentAlignment="Center"/>
+
+                <Grid Margin="0,12,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Save Button-->
-                    <Button 
-                        x:Name="saveButton"
-                        Content="Save"
+                    <Button Content="Save"
+                            Grid.Column="0"
+                            Command="{Binding SaveFileCommand}"
+                            Margin="0,0,6,0"/>
 
-                        Grid.Column="0"
-                        Margin="0,12,6,0"
-        
-                        Click="SaveFile">       
-                    </Button>
-
-                    <!-- Load Button-->
-                    <Button 
-                        x:Name="loadButton"
-                        Content="Load"
-        
-                        Grid.Column="1"
-                        Margin="6,12,0,0"
-
-                        Click="LoadFile"></Button>
+                    <Button Content="Load"
+                            Grid.Column="1"
+                            Command="{Binding LoadFileCommand}"
+                            Margin="6,0,0,0"/>
                 </Grid>
 
-                <!-- Size Changer -->
-                <ComboBox 
-                    x:Name="sizeChanger"
-                    
+                <ComboBox Text="{Binding FontSizeInput, UpdateSourceTrigger=PropertyChanged}"
                     IsEditable="True"
                     IsTextSearchEnabled="False"
-                
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
                     Width="42"
-                    
-                    SelectedIndex="0"
-                    LostFocus="SizeChanger_Changed"
-                    
                     Margin="0,12,0,0">
 
                     <ComboBoxItem Content="12"/>
@@ -391,15 +314,15 @@
                     <ComboBoxItem Content="24"/>
 
                 </ComboBox>
+
+
             </StackPanel>
         </Border>
-        
-        <!-- Stats Widget -->
-        <Border
-            Style="{StaticResource MainWidget}"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Stretch"
-            Margin="786,12,12,12">
-        </Border>
+
+        <!-- STATS WIDGET (empty for now) -->
+        <Border Style="{StaticResource MainWidget}"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Margin="786,12,12,12"/>
     </Grid>
 </Window>
