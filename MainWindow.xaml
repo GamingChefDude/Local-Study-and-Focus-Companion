@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Local_Study_and_Focus_Companion"
-        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Focus Companion"
         Width="1280"
@@ -319,10 +319,31 @@
             </StackPanel>
         </Border>
 
-        <!-- STATS WIDGET (empty for now) -->
+        <!-- STATS WIDGET -->
         <Border Style="{StaticResource MainWidget}"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch"
-                Margin="786,12,12,12"/>
+                Margin="786,12,12,12">
+
+            <Grid Margin="10">
+
+                <lvc:CartesianChart Name="BarChart"
+                        Series="{Binding SeriesCollection}"
+                        LegendLocation="Right">
+
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Subject" Labels="{Binding Labels}"/>
+                    </lvc:CartesianChart.AxisX>
+
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Hours Studied"/>
+                    </lvc:CartesianChart.AxisY>
+
+                </lvc:CartesianChart>
+
+            </Grid>
+        </Border>
+
+
     </Grid>
 </Window>

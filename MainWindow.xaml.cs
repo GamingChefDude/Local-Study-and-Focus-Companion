@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using Local_Study_and_Focus_Companion.ViewModels;
+﻿using Local_Study_and_Focus_Companion.ViewModels;
+using System;
+using System.Windows;
 
 namespace Local_Study_and_Focus_Companion
 {

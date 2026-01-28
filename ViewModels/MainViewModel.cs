@@ -4,6 +4,8 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Threading;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Local_Study_and_Focus_Companion.ViewModels
 {
@@ -17,6 +19,9 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         private string _subject = "";
         private string _fileName = "";
         private double _fontSize = 12;
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
 
         public MainViewModel()
         {
@@ -35,6 +40,18 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             FontSizeChangedCommand = new RelayCommand(_ => UpdateFontSize());
 
             EnsureSaveFolder();
+
+            // Example data — hours studied per subject
+            SeriesCollection = new SeriesCollection
+            {
+                new ColumnSeries
+                {
+                    Title = "Hours",
+                    Values = new ChartValues<double> { 12, 9, 7, 15 }
+                }
+            };
+
+            Labels = new[] { "Math", "Science", "History", "Language" };
         }
 
         private void Tick()
