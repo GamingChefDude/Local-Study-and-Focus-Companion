@@ -7,9 +7,10 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Focus Companion"
-        Width="1280"
-        Height="720"
-        WindowStartupLocation="CenterScreen">
+        Width="1910"
+        Height="1080"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
 
     <Grid Background="#999999">
         <Grid.Resources>
@@ -37,12 +38,9 @@
             <!-- Counter style — cleaned for MVVM -->
             <Style x:Key="counter" TargetType="Label">
                 <Setter Property="Foreground" Value="Black"/>
-                <Setter Property="FontSize" Value="36"/>
+                <Setter Property="FontSize" Value="50"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Padding" Value="0,0,0,0"/>
-                <!-- REMOVE default Content="00" so MVVM works -->
-                <Setter Property="Content" Value="{x:Null}"/>
             </Style>
 
             <!-- Buttons -->
@@ -166,8 +164,8 @@
 
         <!-- TIMER WIDGET -->
         <Border Style="{StaticResource MainWidget}"
-                Width="150"
-                Height="200"
+                Width="200"
+                Height="250"
                 Margin="12,12,0,0">
 
             <Grid>
@@ -177,27 +175,30 @@
                 </Grid.RowDefinitions>
 
                 <!-- Counter Labels -->
-                <Label Style="{StaticResource counter}"
-                       Content="{Binding Hours}"
-                       Margin="4,0,0,0"/>
+                <Grid
+                    VerticalAlignment="Center"
+                    Margin="0,0,0,0">
+                    <Label Style="{StaticResource counter}"
+                           Content="{Binding Hours}"
+                           Margin="-5,0,0,0"/>
 
-                <Label Style="{StaticResource counter}"
-                       Content="{Binding Minutes}"
-                       HorizontalAlignment="Center"/>
+                    <Label Style="{StaticResource counter}"
+                           Content="{Binding Minutes}"
+                           Margin="61,0,0,0"/>
 
-                <Label Style="{StaticResource counter}"
-                       Content="{Binding Seconds}"
-                       Margin="97,0,0,0"/>
+                    <Label Style="{StaticResource counter}"
+                           Content="{Binding Seconds}"
+                           Margin="128,0,0,0"/>
 
-                <!-- Colon separators -->
-                <Label Style="{StaticResource counter}"
-                       Content=":"
-                       Margin="43,0,0,0"/>
+                    <!-- Colon separators -->
+                    <Label Style="{StaticResource counter}"
+                           Content=":"
+                           Margin="52,0,0,0"/>
 
-                <Label Style="{StaticResource counter}"
-                       Content=":"
-                       Margin="89,0,0,0"/>
-
+                    <Label Style="{StaticResource counter}"
+                           Content=":"
+                           Margin="118,0,0,0"/>
+                </Grid>
                 <!-- Timer Buttons -->
                 <UniformGrid Grid.Row="1"
                              Columns="3"
@@ -223,34 +224,35 @@
 
         <!-- NOTES WIDGET -->
         <Border Style="{StaticResource MainWidget}"
-                VerticalAlignment="Stretch"
-                Width="600"
-                Margin="174,12,0,12"
-                Padding="7">
+                        VerticalAlignment="Stretch"
+                        Width="900"
+                        Margin="224,12,0,12"
+                        Padding="7"
+                Panel.ZIndex="1">
 
             <TextBox Background="Transparent"
-                     BorderThickness="0"
-                     AcceptsReturn="True"
-                     TextWrapping="Wrap"
-                     Text="{Binding NoteText}"
-                     FontSize="{Binding NoteFontSize}"/>
+                             BorderThickness="0"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             Text="{Binding NoteText}"
+                             FontSize="{Binding NoteFontSize}"/>
         </Border>
 
         <!-- SUBJECT PICKER -->
         <Border Style="{StaticResource MainWidget}"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Width="150"
-                Height="112"
-                Margin="12,224,0,12"
-                Padding="7">
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Width="200"
+                        Height="112"
+                        Margin="12,274,0,12"
+                        Padding="7">
 
             <StackPanel>
                 <Label Padding="0">Subject Name:</Label>
 
                 <ComboBox Text="{Binding Subject}"
-                          IsEditable="True"
-                          IsTextSearchEnabled="False">
+                                  IsEditable="True"
+                                  IsTextSearchEnabled="False">
 
                     <ComboBoxItem Content="Math"/>
                     <ComboBoxItem Content="English"/>
@@ -263,25 +265,25 @@
                 </ComboBox>
 
                 <Button Content="Save Session"
-                        Margin="0,12,0,0"
-                        Command="{Binding SaveSessionCommand}"/>
+                                Margin="0,12,0,0"
+                                Command="{Binding SaveSessionCommand}"/>
             </StackPanel>
         </Border>
 
         <!-- FILE & FONT SETTINGS WIDGET -->
         <Border Style="{StaticResource MainWidget}"
-                Width="150"
-                VerticalAlignment="Stretch"
-                Padding="7"
-                Margin="12,348,0,12">
+                        Width="200"
+                        VerticalAlignment="Stretch"
+                        Padding="7"
+                        Margin="12,396,0,12">
 
             <StackPanel>
 
                 <Label Padding="0">File Name:</Label>
 
                 <TextBox Text="{Binding FileName}"
-                         Height="25"
-                         VerticalContentAlignment="Center"/>
+                                 Height="25"
+                                 VerticalContentAlignment="Center"/>
 
                 <Grid Margin="0,12,0,0">
                     <Grid.ColumnDefinitions>
@@ -290,21 +292,21 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Content="Save"
-                            Grid.Column="0"
-                            Command="{Binding SaveFileCommand}"
-                            Margin="0,0,6,0"/>
+                                    Grid.Column="0"
+                                    Command="{Binding SaveFileCommand}"
+                                    Margin="0,0,6,0"/>
 
                     <Button Content="Load"
-                            Grid.Column="1"
-                            Command="{Binding LoadFileCommand}"
-                            Margin="6,0,0,0"/>
+                                    Grid.Column="1"
+                                    Command="{Binding LoadFileCommand}"
+                                    Margin="6,0,0,0"/>
                 </Grid>
 
                 <ComboBox Text="{Binding FontSizeInput, UpdateSourceTrigger=PropertyChanged}"
-                    IsEditable="True"
-                    IsTextSearchEnabled="False"
-                    Width="42"
-                    Margin="0,12,0,0">
+                            IsEditable="True"
+                            IsTextSearchEnabled="False"
+                            Width="42"
+                            Margin="0,12,0,0">
 
                     <ComboBoxItem Content="12"/>
                     <ComboBoxItem Content="14"/>
@@ -321,15 +323,15 @@
 
         <!-- STATS WIDGET -->
         <Border Style="{StaticResource MainWidget}"
-                VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch"
-                Margin="786,12,12,12">
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Margin="1136,12,12,12">
 
             <Grid Margin="10">
 
                 <lvc:CartesianChart Name="BarChart"
-                        Series="{Binding SeriesCollection}"
-                        LegendLocation="Right">
+                            Series="{Binding SeriesCollection}"
+                            LegendLocation="Right">
 
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Subject" Labels="{Binding Labels}"/>
@@ -343,7 +345,5 @@
 
             </Grid>
         </Border>
-
-
     </Grid>
 </Window>

@@ -20,8 +20,8 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         private string _fileName = "";
         private double _fontSize = 12;
 
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
+        public SeriesCollection SeriesCollection { get; set; } // Main data that gets displayed
+        public string[] Labels { get; set; } // Labels on X-Axis to show the subjects
 
         public MainViewModel()
         {
