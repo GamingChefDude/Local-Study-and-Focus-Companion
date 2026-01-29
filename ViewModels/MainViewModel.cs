@@ -39,8 +39,10 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             LoadFileCommand = new RelayCommand(_ => LoadFile());
             FontSizeChangedCommand = new RelayCommand(_ => UpdateFontSize());
 
+            // ShowStatsWindowCommand = new RelayCommand(_ => ShowStatsWindow());
+
             EnsureSaveFolder();
-            UpdateStats();
+            GetStats();
         }
 
         private void GetStats()
@@ -51,11 +53,11 @@ namespace Local_Study_and_Focus_Companion.ViewModels
                 new ColumnSeries
                 {
                     Title = "Hours",
-                    Values = new ChartValues<double> { 12, 9, 7, 15 }
+                    Values = new ChartValues<double> { 12, 0, 9, 7, 15, 0, 0, 0 }
                 }
             };
 
-            Labels = new[] { "Math", "Science", "History", "Language" };
+            Labels = new[] { "Math", "English", "Physics", "Chemistry", "Biology", "History", "Geography", "PE" };
         }
 
         private void Tick()

@@ -1,0 +1,342 @@
+﻿<UserControl x:Class="Local_Study_and_Focus_Companion.View.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:local="clr-namespace:Local_Study_and_Focus_Companion.View">
+    <Grid>
+        <Grid Background="#999999">
+            <Grid.Resources>
+
+                <!-- Base style -->
+                <Style x:Key="SoftControlBase" TargetType="Control">
+                    <Setter Property="Background" Value="Beige"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1.5"/>
+                    <Setter Property="MinHeight" Value="25"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Padding" Value="6,2"/>
+                </Style>
+
+                <!-- Main Widget -->
+                <Style x:Key="MainWidget" TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="5"/>
+                    <Setter Property="Background" Value="LightGray"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                </Style>
+
+                <!-- Counter style — cleaned for MVVM -->
+                <Style x:Key="counter" TargetType="Label">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontSize" Value="50"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+
+                <!-- Buttons -->
+                <Style TargetType="Button" BasedOn="{StaticResource SoftControlBase}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="5">
+                                    <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+                <!-- TextBox -->
+                <Style TargetType="TextBox" BasedOn="{StaticResource SoftControlBase}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TextBox">
+                                <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                            Padding="{TemplateBinding Padding}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+                <!-- ComboBox -->
+                <Style TargetType="ComboBox" BasedOn="{StaticResource SoftControlBase}">
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ComboBox">
+                                <Grid>
+                                    <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="6">
+                                        <DockPanel>
+                                            <TextBlock Text="{TemplateBinding Text}"
+                                                VerticalAlignment="Center"
+                                                Padding="6,0,0,0"
+                                                Foreground="Black"
+                                                IsHitTestVisible="False"/>
+
+                                            <ToggleButton DockPanel.Dock="Right"
+                                                    Width="18"
+                                                    IsChecked="{Binding IsDropDownOpen, 
+                                                        RelativeSource={RelativeSource TemplatedParent}}"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Focusable="False">
+
+                                                <Path Data="M 0 0 L 4 4 L 8 0 Z"
+                                                Fill="Black"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"/>
+                                            </ToggleButton>
+
+                                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Left"
+                                                        Content="{TemplateBinding SelectionBoxItem}"/>
+                                        </DockPanel>
+                                    </Border>
+
+                                    <Popup Name="Popup"
+                                    Placement="Bottom"
+                                    IsOpen="{TemplateBinding IsDropDownOpen}"
+                                    AllowsTransparency="True"
+                                    PopupAnimation="Slide">
+                                        <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="6"
+                                        Margin="0,2,0,0"
+                                        Padding="2">
+                                            <ScrollViewer>
+                                                <ItemsPresenter/>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Popup>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Background" Value="Beige"/>
+                    <Setter Property="Padding" Value="6,2"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#D8D4B0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+            </Grid.Resources>
+
+            <!-- TIMER WIDGET -->
+            <Border Style="{StaticResource MainWidget}"
+            Width="200"
+            Height="250"
+            Margin="12,12,0,0">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Counter Labels -->
+                    <Grid
+                VerticalAlignment="Center"
+                Margin="0,0,0,0">
+                        <Label Style="{StaticResource counter}"
+                        Content="{Binding Hours}"
+                        Margin="-5,0,0,0"/>
+
+                        <Label Style="{StaticResource counter}"
+                        Content="{Binding Minutes}"
+                        Margin="61,0,0,0"/>
+
+                        <Label Style="{StaticResource counter}"
+                        Content="{Binding Seconds}"
+                        Margin="128,0,0,0"/>
+
+                        <!-- Colon separators -->
+                        <Label Style="{StaticResource counter}"
+                        Content=":"
+                        Margin="52,0,0,0"/>
+
+                        <Label Style="{StaticResource counter}"
+                        Content=":"
+                        Margin="118,0,0,0"/>
+                    </Grid>
+                    <!-- Timer Buttons -->
+                    <UniformGrid Grid.Row="1"
+                            Columns="3"
+                            Margin="12,0,12,12">
+
+                        <Button Content="Start"
+                        Background="Green"
+                        Command="{Binding StartCommand}"
+                        Margin="0,0,6,0"/>
+
+                        <Button Content="Stop"
+                        Background="Red"
+                        Command="{Binding StopCommand}"/>
+
+                        <Button Content="Reset"
+                        Background="#6B7280"
+                        Command="{Binding ResetCommand}"
+                        Margin="6,0,0,0"/>
+
+                    </UniformGrid>
+                </Grid>
+            </Border>
+
+            <!-- NOTES WIDGET -->
+            <Border Style="{StaticResource MainWidget}"
+                    VerticalAlignment="Stretch"
+                    Width="900"
+                    Margin="224,12,0,12"
+                    Padding="7"
+            Panel.ZIndex="1">
+
+                <TextBox Background="Transparent"
+                            BorderThickness="0"
+                            AcceptsReturn="True"
+                            TextWrapping="Wrap"
+                            Text="{Binding NoteText}"
+                            FontSize="{Binding NoteFontSize}"/>
+            </Border>
+
+            <!-- SUBJECT PICKER -->
+            <Border Style="{StaticResource MainWidget}"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Width="200"
+                    Height="112"
+                    Margin="12,274,0,12"
+                    Padding="7">
+
+                <StackPanel>
+                    <Label Padding="0">Subject Name:</Label>
+
+                    <ComboBox Text="{Binding Subject}"
+                                IsEditable="True"
+                                IsTextSearchEnabled="False">
+
+                        <ComboBoxItem Content="Math"/>
+                        <ComboBoxItem Content="English"/>
+                        <ComboBoxItem Content="Physics"/>
+                        <ComboBoxItem Content="Chemistry"/>
+                        <ComboBoxItem Content="Biology"/>
+                        <ComboBoxItem Content="History"/>
+                        <ComboBoxItem Content="Geography"/>
+                        <ComboBoxItem Content="PE"/>
+                    </ComboBox>
+
+                    <Button Content="Save Session"
+                            Margin="0,12,0,0"
+                            Command="{Binding SaveSessionCommand}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- FILE & FONT SETTINGS WIDGET -->
+            <Border Style="{StaticResource MainWidget}"
+                    Width="200"
+                    VerticalAlignment="Stretch"
+                    Padding="7"
+                    Margin="12,396,0,12">
+
+                <StackPanel>
+
+                    <Label Padding="0">File Name:</Label>
+
+                    <TextBox Text="{Binding FileName}"
+                                Height="25"
+                                VerticalContentAlignment="Center"/>
+
+                    <Grid Margin="0,12,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="Save"
+                                Grid.Column="0"
+                                Command="{Binding SaveFileCommand}"
+                                Margin="0,0,6,0"/>
+
+                        <Button Content="Load"
+                                Grid.Column="1"
+                                Command="{Binding LoadFileCommand}"
+                                Margin="6,0,0,0"/>
+                    </Grid>
+
+                    <ComboBox Text="{Binding FontSizeInput, UpdateSourceTrigger=PropertyChanged}"
+                        IsEditable="True"
+                        IsTextSearchEnabled="False"
+                        Width="42"
+                        Margin="0,12,0,0">
+
+                        <ComboBoxItem Content="12"/>
+                        <ComboBoxItem Content="14"/>
+                        <ComboBoxItem Content="16"/>
+                        <ComboBoxItem Content="18"/>
+                        <ComboBoxItem Content="20"/>
+                        <ComboBoxItem Content="24"/>
+
+                    </ComboBox>
+
+
+                </StackPanel>
+            </Border>
+
+            <!-- STATS WIDGET -->
+            <Border Style="{StaticResource MainWidget}"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Margin="1136,12,12,12">
+
+                <Grid Margin="10">
+
+                    <lvc:CartesianChart Name="BarChart"
+                        Series="{Binding SeriesCollection}"
+                        LegendLocation="Right">
+
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Subject" Labels="{Binding Labels}"/>
+                        </lvc:CartesianChart.AxisX>
+
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Hours Studied"/>
+                        </lvc:CartesianChart.AxisY>
+
+                    </lvc:CartesianChart>
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
