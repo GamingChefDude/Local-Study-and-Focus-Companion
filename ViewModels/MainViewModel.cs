@@ -40,7 +40,11 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             FontSizeChangedCommand = new RelayCommand(_ => UpdateFontSize());
 
             EnsureSaveFolder();
+            UpdateStats();
+        }
 
+        private void GetStats()
+        {
             // Example data — hours studied per subject
             SeriesCollection = new SeriesCollection
             {
