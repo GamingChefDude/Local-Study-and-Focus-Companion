@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Globalization;
 
 namespace Local_Study_and_Focus_Companion.ViewModels
 {
@@ -30,6 +31,24 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         // Formatters exposed for LiveCharts bindings
         public Func<double, string> YFormatter { get; }
         public Func<ChartPoint, string> PointLabel { get; }
+
+        // Toggle between showing last week only or all time
+        private bool _showLastWeekOnly = true;
+        public bool ShowLastWeekOnly
+        {
+            get => _showLastWeekOnly;
+            set
+            {
+                if (_showLastWeekOnly == value) return;
+                _showLastWeekOnly = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedRangeLabel));
+            }
+        }
+
+        public string SelectedRangeLabel => ShowLastWeekOnly ? "Showing: Last Week (click to All Time)" : "Showing: All Time (click to Last Week)";
+
+        public ICommand ToggleStatsRangeCommand { get; }
 
         public MainViewModel()
         {
@@ -52,6 +71,12 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             LoadFileCommand = new RelayCommand(_ => LoadFile());
             FontSizeChangedCommand = new RelayCommand(_ => UpdateFontSize());
 
+            ToggleStatsRangeCommand = new RelayCommand(_ =>
+            {
+                ShowLastWeekOnly = !ShowLastWeekOnly;
+                GetStats();
+            });
+
             SwitchViewCommand = new RelayCommand(_ => ShowStatsWindow());
 
             EnsureSaveFolder();
@@ -60,9 +85,13 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         private void GetStats()
         {
             // Aggregate total hours per subject from session.csv
+            // ShowLastWeekOnly controls whether we filter to the last 7 days or include all time
             try
             {
                 var totals = new System.Collections.Generic.Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
+
+                // cutoff: include today and previous 6 days (7 days total) if ShowLastWeekOnly == true
+                DateTime cutoff = DateTime.Now.Date.AddDays(-6);
 
                 if (File.Exists(_sessionFile))
                 {
@@ -76,13 +105,24 @@ namespace Local_Study_and_Focus_Companion.ViewModels
                         if (parts.Length < 3)
                             continue; // ignore malformed line
 
-                        string date = parts[0].Trim();
+                        string dateText = parts[0].Trim();
                         string duration = parts[1].Trim();
                         string subject = parts[2].Trim();
                         if (string.IsNullOrEmpty(subject))
                             subject = "Unknown";
 
-                        // Try parse duration as TimeSpan (expected format "HH:MM:SS")
+                        // Parse date in the expected format used when saving ("dd-MM-yyyy")
+                        if (!DateTime.TryParseExact(dateText, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+                        {
+                            // If the date doesn't match the expected pattern, skip the line
+                            continue;
+                        }
+
+                        // If last-week-only filter is enabled, skip older entries
+                        if (ShowLastWeekOnly && parsedDate.Date < cutoff)
+                            continue;
+
+                        // Try parse duration as TimeSpan (expected format "hh:mm:ss" or "h:m:s")
                         if (TimeSpan.TryParse(duration, out TimeSpan span))
                         {
                             if (!totals.ContainsKey(subject))
