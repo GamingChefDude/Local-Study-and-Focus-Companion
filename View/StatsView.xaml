@@ -4,7 +4,8 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:local="clr-namespace:Local_Study_and_Focus_Companion.View"
              Width="1920" Height="1080">
-    <Grid>
+    
+    <Grid Background="#999999">
         <!-- STATS WIDGET -->
         <Border
             VerticalAlignment="Stretch"

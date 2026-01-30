@@ -10,7 +10,7 @@ namespace Local_Study_and_Focus_Companion
         public MainWindow()
         {
             InitializeComponent();
-            MainContent.Content = new MainView();
+            CurrentView.Content = new MainView();
         }
     }
 }

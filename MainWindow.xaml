@@ -13,6 +13,6 @@
         WindowState="Maximized">
 
     <Grid>
-        <ContentControl x:Name="MainContent" />
+        <ContentControl x:Name="CurrentView" />
     </Grid>
 </Window>

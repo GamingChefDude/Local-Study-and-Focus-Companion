@@ -1,11 +1,13 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using Local_Study_and_Focus_Companion.View;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace Local_Study_and_Focus_Companion.ViewModels
 {
@@ -31,6 +33,7 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             };
             _timer.Tick += (s, e) => Tick();
 
+            // Commands
             StartCommand = new RelayCommand(_ => _timer.Start());
             StopCommand = new RelayCommand(_ => _timer.Stop());
             ResetCommand = new RelayCommand(_ => ResetTimer());
@@ -195,7 +198,7 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         public ICommand SaveFileCommand { get; }
         public ICommand LoadFileCommand { get; }
         public ICommand FontSizeChangedCommand { get; }
-
+       
         private void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }

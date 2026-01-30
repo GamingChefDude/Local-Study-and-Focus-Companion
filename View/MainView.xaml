@@ -307,8 +307,6 @@
                         <ComboBoxItem Content="24"/>
 
                     </ComboBox>
-
-
                 </StackPanel>
             </Border>
         </Grid>
