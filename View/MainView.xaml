@@ -309,6 +309,12 @@
                     </ComboBox>
                 </StackPanel>
             </Border>
+            
+            <Button
+                Width="100" Height="100"
+                HorizontalAlignment="Right"
+                Margin="0,0,12,0"
+                Command="{Binding SwitchViewCommand}"></Button>
         </Grid>
     </Grid>
 </UserControl>

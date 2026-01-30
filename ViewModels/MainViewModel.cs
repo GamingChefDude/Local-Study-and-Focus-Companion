@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -42,7 +43,7 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             LoadFileCommand = new RelayCommand(_ => LoadFile());
             FontSizeChangedCommand = new RelayCommand(_ => UpdateFontSize());
 
-            // ShowStatsWindowCommand = new RelayCommand(_ => ShowStatsWindow());
+            SwitchViewCommand = new RelayCommand(_ => ShowStatsWindow());
 
             EnsureSaveFolder();
             GetStats();
@@ -198,7 +199,21 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         public ICommand SaveFileCommand { get; }
         public ICommand LoadFileCommand { get; }
         public ICommand FontSizeChangedCommand { get; }
-       
+        public ICommand SwitchViewCommand { get; }
+
+        private void ShowStatsWindow()
+        {
+            var main = Application.Current?.MainWindow as MainWindow;
+            if (main != null)
+            {
+                var stats = new StatsView
+                {
+                    DataContext = this
+                };
+                main.CurrentView.Content = stats;
+            }
+        }
+
         private void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
