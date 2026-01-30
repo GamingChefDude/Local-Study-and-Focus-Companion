@@ -49,6 +49,8 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         public string SelectedRangeLabel => ShowLastWeekOnly ? "Showing: Last Week (click to All Time)" : "Showing: All Time (click to Last Week)";
 
         public ICommand ToggleStatsRangeCommand { get; }
+        public ICommand ToggleViewCommand { get; } // toggles between MainView and StatsView
+        public ICommand SwitchViewCommand => ToggleViewCommand; // keep existing binding name usable
 
         public MainViewModel()
         {
@@ -77,9 +79,37 @@ namespace Local_Study_and_Focus_Companion.ViewModels
                 GetStats();
             });
 
-            SwitchViewCommand = new RelayCommand(_ => ShowStatsWindow());
+            ToggleViewCommand = new RelayCommand(_ => ToggleMainStatsView());
 
             EnsureSaveFolder();
+        }
+
+        private void ToggleMainStatsView()
+        {
+            var main = Application.Current?.MainWindow as MainWindow;
+            if (main == null) return;
+
+            var current = main.CurrentView.Content;
+
+            // If currently displaying StatsView, go back to MainView
+            if (current is StatsView)
+            {
+                var mainView = new MainView
+                {
+                    DataContext = this
+                };
+                main.CurrentView.Content = mainView;
+            }
+            else
+            {
+                // Show stats view (refresh data before showing)
+                GetStats();
+                var stats = new StatsView
+                {
+                    DataContext = this
+                };
+                main.CurrentView.Content = stats;
+            }
         }
 
         private void GetStats()
@@ -318,21 +348,6 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         public ICommand SaveFileCommand { get; }
         public ICommand LoadFileCommand { get; }
         public ICommand FontSizeChangedCommand { get; }
-        public ICommand SwitchViewCommand { get; }
-
-        private void ShowStatsWindow()
-        {
-            GetStats();
-            var main = Application.Current?.MainWindow as MainWindow;
-            if (main != null)
-            {
-                var stats = new StatsView
-                {
-                    DataContext = this
-                };
-                main.CurrentView.Content = stats;
-            }
-        }
 
         private void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
