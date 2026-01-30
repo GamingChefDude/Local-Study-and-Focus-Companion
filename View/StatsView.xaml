@@ -6,8 +6,19 @@
              Width="1920" Height="1080">
     
     <Grid Background="#999999">
-        <!-- STATS WIDGET -->
-        <Border
+        <Grid.Resources>
+            <!-- Main Widget -->
+            <Style x:Key="MainWidget" TargetType="Border">
+                <Setter Property="CornerRadius" Value="25"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="5"/>
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+        </Grid.Resources>
+            <!-- STATS WIDGET -->
+        <Border Style="{StaticResource MainWidget}"
             VerticalAlignment="Stretch"
             HorizontalAlignment="Stretch"
             Margin="12,12,12,12">
@@ -23,7 +34,8 @@
                     </lvc:CartesianChart.AxisX>
 
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Hours Studied"/>
+                        <!-- Format numeric axis values (hours) to hh:mm:ss -->
+                        <lvc:Axis Title="Time Studied" LabelFormatter="{Binding YFormatter}"/>
                     </lvc:CartesianChart.AxisY>
 
                 </lvc:CartesianChart>

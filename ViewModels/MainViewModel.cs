@@ -4,6 +4,7 @@ using Local_Study_and_Focus_Companion.View;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,8 +27,16 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         public SeriesCollection SeriesCollection { get; set; } // Main data that gets displayed
         public string[] Labels { get; set; } // Labels on X-Axis to show the subjects
 
+        // Formatters exposed for LiveCharts bindings
+        public Func<double, string> YFormatter { get; }
+        public Func<ChartPoint, string> PointLabel { get; }
+
         public MainViewModel()
         {
+            // Axis/point formatters: convert numeric hours -> hh:mm:ss
+            YFormatter = value => TimeSpan.FromHours(value).ToString(@"hh\:mm\:ss");
+            PointLabel = point => TimeSpan.FromHours(point.Y).ToString(@"hh\:mm\:ss");
+
             _timer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(1)
@@ -46,22 +55,87 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             SwitchViewCommand = new RelayCommand(_ => ShowStatsWindow());
 
             EnsureSaveFolder();
-            GetStats();
         }
 
         private void GetStats()
         {
-            // Example data — hours studied per subject
-            SeriesCollection = new SeriesCollection
+            // Aggregate total hours per subject from session.csv
+            try
             {
-                new ColumnSeries
-                {
-                    Title = "Hours",
-                    Values = new ChartValues<double> { 12, 0, 9, 7, 15, 0, 0, 0 }
-                }
-            };
+                var totals = new System.Collections.Generic.Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
 
-            Labels = new[] { "Math", "English", "Physics", "Chemistry", "Biology", "History", "Geography", "PE" };
+                if (File.Exists(_sessionFile))
+                {
+                    string[] lines = File.ReadAllLines(_sessionFile);
+                    foreach (string line in lines)
+                    {
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+
+                        string[] parts = line.Split(',');
+                        if (parts.Length < 3)
+                            continue; // ignore malformed line
+
+                        string date = parts[0].Trim();
+                        string duration = parts[1].Trim();
+                        string subject = parts[2].Trim();
+                        if (string.IsNullOrEmpty(subject))
+                            subject = "Unknown";
+
+                        // Try parse duration as TimeSpan (expected format "HH:MM:SS")
+                        if (TimeSpan.TryParse(duration, out TimeSpan span))
+                        {
+                            if (!totals.ContainsKey(subject))
+                                totals[subject] = 0;
+                            totals[subject] += span.TotalHours;
+                        }
+                        else
+                        {
+                            // Fallback: try splitting by ':' and parse numbers safely
+                            var segs = duration.Split(':');
+                            if (segs.Length >= 1 && int.TryParse(segs[0], out int h))
+                            {
+                                double totalHours = h;
+                                if (segs.Length >= 2 && int.TryParse(segs[1], out int m))
+                                    totalHours += m / 60.0;
+                                if (segs.Length >= 3 && int.TryParse(segs[2], out int s))
+                                    totalHours += s / 3600.0;
+
+                                if (!totals.ContainsKey(subject))
+                                    totals[subject] = 0;
+                                totals[subject] += totalHours;
+                            }
+                            // else ignore this line if we couldn't parse duration
+                        }
+                    }
+                }
+
+                var values = new ChartValues<double>();
+                var labels = totals.Keys.ToArray();
+
+                foreach (var key in labels)
+                    values.Add(totals[key]);
+
+                SeriesCollection = new SeriesCollection
+                {
+                    new ColumnSeries
+                    {
+                        Title = "Time",
+                        Values = values,
+                        DataLabels = true,
+                        LabelPoint = PointLabel
+                    }
+                };
+
+                Labels = labels;
+
+                OnPropertyChanged(nameof(SeriesCollection));
+                OnPropertyChanged(nameof(Labels));
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void Tick()
@@ -111,7 +185,12 @@ namespace Local_Study_and_Focus_Companion.ViewModels
         }
 
         private string _folderPath;
-        private string _sessionFile;
+        private string _session_file;
+        private string _sessionFile
+        {
+            get => _session_file;
+            set => _session_file = value;
+        }
 
         private void EnsureSaveFolder()
         {
@@ -203,6 +282,7 @@ namespace Local_Study_and_Focus_Companion.ViewModels
 
         private void ShowStatsWindow()
         {
+            GetStats();
             var main = Application.Current?.MainWindow as MainWindow;
             if (main != null)
             {
