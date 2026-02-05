@@ -152,169 +152,165 @@
                 </Style>
 
             </Grid.Resources>
+            <Grid HorizontalAlignment="Center">
+                <!-- TIMER WIDGET -->
+                <Border Style="{StaticResource MainWidget}"
+                Width="200"
+                Height="250"
+                Margin="12,12,0,0">
 
-            <!-- TIMER WIDGET -->
-            <Border Style="{StaticResource MainWidget}"
-            Width="200"
-            Height="250"
-            Margin="12,12,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
+                        <!-- Counter Labels -->
+                        <Grid
+                    VerticalAlignment="Center"
+                    Margin="0,0,0,0">
+                            <Label Style="{StaticResource counter}"
+                            Content="{Binding Hours}"
+                            Margin="-5,0,0,0"/>
 
-                    <!-- Counter Labels -->
-                    <Grid
-                VerticalAlignment="Center"
-                Margin="0,0,0,0">
-                        <Label Style="{StaticResource counter}"
-                        Content="{Binding Hours}"
-                        Margin="-5,0,0,0"/>
+                            <Label Style="{StaticResource counter}"
+                            Content="{Binding Minutes}"
+                            Margin="61,0,0,0"/>
 
-                        <Label Style="{StaticResource counter}"
-                        Content="{Binding Minutes}"
-                        Margin="61,0,0,0"/>
+                            <Label Style="{StaticResource counter}"
+                            Content="{Binding Seconds}"
+                            Margin="128,0,0,0"/>
 
-                        <Label Style="{StaticResource counter}"
-                        Content="{Binding Seconds}"
-                        Margin="128,0,0,0"/>
+                            <!-- Colon separators -->
+                            <Label Style="{StaticResource counter}"
+                            Content=":"
+                            Margin="52,0,0,0"/>
 
-                        <!-- Colon separators -->
-                        <Label Style="{StaticResource counter}"
-                        Content=":"
-                        Margin="52,0,0,0"/>
+                            <Label Style="{StaticResource counter}"
+                            Content=":"
+                            Margin="118,0,0,0"/>
+                        </Grid>
+                        <!-- Timer Buttons -->
+                        <UniformGrid Grid.Row="1"
+                                Columns="3"
+                                Margin="12,0,12,12">
 
-                        <Label Style="{StaticResource counter}"
-                        Content=":"
-                        Margin="118,0,0,0"/>
+                            <Button Content="Start"
+                            Background="Green"
+                            Command="{Binding StartCommand}"
+                            Margin="0,0,6,0"/>
+
+                            <Button Content="Stop"
+                            Background="Red"
+                            Command="{Binding StopCommand}"/>
+
+                            <Button Content="Reset"
+                            Background="#6B7280"
+                            Command="{Binding ResetCommand}"
+                            Margin="6,0,0,0"/>
+
+                        </UniformGrid>
                     </Grid>
-                    <!-- Timer Buttons -->
-                    <UniformGrid Grid.Row="1"
-                            Columns="3"
-                            Margin="12,0,12,12">
+                </Border>
 
-                        <Button Content="Start"
-                        Background="Green"
-                        Command="{Binding StartCommand}"
-                        Margin="0,0,6,0"/>
+                <!-- NOTES WIDGET -->
+                <Border Style="{StaticResource MainWidget}"
+                        VerticalAlignment="Stretch"
+                        Width="1200"
+                        Margin="224,12,0,12"
+                        Padding="7">
 
-                        <Button Content="Stop"
-                        Background="Red"
-                        Command="{Binding StopCommand}"/>
-
-                        <Button Content="Reset"
-                        Background="#6B7280"
-                        Command="{Binding ResetCommand}"
-                        Margin="6,0,0,0"/>
-
-                    </UniformGrid>
-                </Grid>
-            </Border>
-
-            <!-- NOTES WIDGET -->
-            <Border Style="{StaticResource MainWidget}"
-                    VerticalAlignment="Stretch"
-                    Width="900"
-                    Margin="224,12,0,12"
-                    Padding="7"
-            Panel.ZIndex="1">
-
-                <TextBox Background="Transparent"
+                    <TextBox Background="Transparent"
                             BorderThickness="0"
                             AcceptsReturn="True"
                             TextWrapping="Wrap"
                             Text="{Binding NoteText}"
                             FontSize="{Binding NoteFontSize}"/>
-            </Border>
+                </Border>
 
-            <!-- SUBJECT PICKER -->
-            <Border Style="{StaticResource MainWidget}"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    Width="200"
-                    Height="112"
-                    Margin="12,274,0,12"
-                    Padding="7">
+                <!-- SUBJECT PICKER -->
+                <Border Style="{StaticResource MainWidget}"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Width="200"
+                        Height="112"
+                        Margin="12,274,0,12"
+                        Padding="7">
 
-                <StackPanel>
-                    <Label Padding="0">Subject Name:</Label>
+                    <StackPanel>
+                        <Label Padding="0">Subject Name:</Label>
 
-                    <ComboBox Text="{Binding Subject}"
-                                IsEditable="True"
-                                IsTextSearchEnabled="False">
+                        <ComboBox Text="{Binding Subject}"
+                                    IsEditable="True"
+                                    IsTextSearchEnabled="False">
 
-                        <ComboBoxItem Content="Math"/>
-                        <ComboBoxItem Content="English"/>
-                        <ComboBoxItem Content="Physics"/>
-                        <ComboBoxItem Content="Chemistry"/>
-                        <ComboBoxItem Content="Biology"/>
-                        <ComboBoxItem Content="History"/>
-                        <ComboBoxItem Content="Geography"/>
-                        <ComboBoxItem Content="PE"/>
-                    </ComboBox>
+                            <ComboBoxItem Content="Math"/>
+                            <ComboBoxItem Content="English"/>
+                            <ComboBoxItem Content="Physics"/>
+                            <ComboBoxItem Content="Chemistry"/>
+                            <ComboBoxItem Content="Biology"/>
+                            <ComboBoxItem Content="History"/>
+                            <ComboBoxItem Content="Geography"/>
+                            <ComboBoxItem Content="PE"/>
+                        </ComboBox>
 
-                    <Button Content="Save Session"
-                            Margin="0,12,0,0"
-                            Command="{Binding SaveSessionCommand}"/>
-                </StackPanel>
-            </Border>
+                        <Button Content="Save Session"
+                                Margin="0,12,0,0"
+                                Command="{Binding SaveSessionCommand}"/>
+                    </StackPanel>
+                </Border>
 
-            <!-- FILE & FONT SETTINGS WIDGET -->
-            <Border Style="{StaticResource MainWidget}"
-                    Width="200"
-                    VerticalAlignment="Stretch"
-                    Padding="7"
-                    Margin="12,396,0,12">
+                <!-- FILE & FONT SETTINGS WIDGET -->
+                <Border Style="{StaticResource MainWidget}"
+                        Width="200"
+                        VerticalAlignment="Stretch"
+                        Padding="7"
+                        Margin="12,396,0,12">
 
-                <StackPanel>
+                    <StackPanel>
 
-                    <Label Padding="0">File Name:</Label>
+                        <Label Padding="0">File Name:</Label>
 
-                    <TextBox Text="{Binding FileName}"
-                                Height="25"
-                                VerticalContentAlignment="Center"/>
+                        <TextBox Text="{Binding FileName}"
+                                    Height="25"
+                                    VerticalContentAlignment="Center"/>
 
-                    <Grid Margin="0,12,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                        <Grid Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                        <Button Content="Save"
-                                Grid.Column="0"
-                                Command="{Binding SaveFileCommand}"
-                                Margin="0,0,6,0"/>
+                            <Button Content="Save"
+                                    Grid.Column="0"
+                                    Command="{Binding SaveFileCommand}"
+                                    Margin="0,0,6,0"/>
 
-                        <Button Content="Load"
-                                Grid.Column="1"
-                                Command="{Binding LoadFileCommand}"
-                                Margin="6,0,0,0"/>
-                    </Grid>
+                            <Button Content="Load"
+                                    Grid.Column="1"
+                                    Command="{Binding LoadFileCommand}"
+                                    Margin="6,0,0,0"/>
+                        </Grid>
 
-                    <ComboBox Text="{Binding FontSizeInput, UpdateSourceTrigger=PropertyChanged}"
-                        IsEditable="True"
-                        IsTextSearchEnabled="False"
-                        Width="42"
-                        Margin="0,12,0,0">
+                        <ComboBox Text="{Binding FontSizeInput, UpdateSourceTrigger=PropertyChanged}"
+                            IsEditable="True"
+                            IsTextSearchEnabled="False"
+                            Width="42"
+                            Margin="0,12,0,0">
 
-                        <ComboBoxItem Content="12"/>
-                        <ComboBoxItem Content="14"/>
-                        <ComboBoxItem Content="16"/>
-                        <ComboBoxItem Content="18"/>
-                        <ComboBoxItem Content="20"/>
-                        <ComboBoxItem Content="24"/>
+                            <ComboBoxItem Content="12"/>
+                            <ComboBoxItem Content="14"/>
+                            <ComboBoxItem Content="16"/>
+                            <ComboBoxItem Content="18"/>
+                            <ComboBoxItem Content="20"/>
+                            <ComboBoxItem Content="24"/>
 
-                    </ComboBox>
-                </StackPanel>
-            </Border>
-            
-            <Button
-                Width="100" Height="100"
-                HorizontalAlignment="Right"
-                Margin="0,0,12,0"
-                Command="{Binding SwitchViewCommand}"></Button>
+                        </ComboBox>
+                        
+                        <!-- STATS BUTTON -->
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

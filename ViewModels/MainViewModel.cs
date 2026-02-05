@@ -289,7 +289,7 @@ namespace Local_Study_and_Focus_Companion.ViewModels
             try
             {
                 using (StreamWriter fileWriter = File.AppendText(_sessionFile))
-                    fileWriter.WriteLine($"{date},{duration},{Subject}");
+                fileWriter.WriteLine($"{date},{duration},{Subject}");
                 System.Windows.MessageBox.Show($"Session saved to {_sessionFile}");
             }
             catch (Exception ex)
