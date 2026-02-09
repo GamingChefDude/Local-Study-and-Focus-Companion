@@ -310,6 +310,13 @@
                         <!-- STATS BUTTON -->
                     </StackPanel>
                 </Border>
+
+                <Button
+                    Width="100"
+                    Height="100"
+                    HorizontalAlignment="Right"
+                    Command="{Binding SwitchViewCommand}"/>
+                
             </Grid>
         </Grid>
     </Grid>
