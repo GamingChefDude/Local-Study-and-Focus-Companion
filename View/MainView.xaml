@@ -306,16 +306,17 @@
                             <ComboBoxItem Content="24"/>
 
                         </ComboBox>
+                       
                         
-                        <!-- STATS BUTTON -->
                     </StackPanel>
                 </Border>
-
-                <Button
-                    Width="100"
-                    Height="100"
-                    HorizontalAlignment="Right"
-                    Command="{Binding SwitchViewCommand}"/>
+				<!-- STATS BUTTON -->
+				<Button
+					Width="100"
+					Height="100"
+					HorizontalAlignment="Right"
+					Command="{Binding SwitchViewCommand}"/>
+				
                 
             </Grid>
         </Grid>
